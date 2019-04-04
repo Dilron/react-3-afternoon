@@ -21,7 +21,18 @@ export default class Compose extends Component {
   }
 
   createPost() {
+    let day = new Date;
+    let monthIndex = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    let month = monthIndex.filter(() => day.getMonth())
 
+    let body = {
+      text: this.state.text,
+      date: `${day.getDay()} ${month} ${day.getFullYear()}`,
+      id: `${(this.props.posts[this.props.posts.length - 1].id) + 1}` 
+    }
+
+    this.props.createPost(body);
+    this.setState({text: ''})
   }
 
   render() {
@@ -45,7 +56,7 @@ export default class Compose extends Component {
         </div>
 
         <div className="Compose__bottom">
-          <button onClick={ this.createPost }>Compose</button>
+          <button onClick={ () => this.createPost(this.state.text) }>Compose</button>
         </div>
       </section>
     )
